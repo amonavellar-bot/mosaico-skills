@@ -333,8 +333,9 @@ a:focus { outline: none; }
 </div>
 
 <script>
-// Query all focusable elements inside the modal
-const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+// Query all focusable elements inside the modal — disabled elements excluded because
+// they are unreachable by keyboard and .focus() on them is a no-op in all browsers
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 function abrirModal() {
   const modal = document.getElementById('modal');
@@ -993,14 +994,13 @@ In single-page apps (React, Vue, Angular), navigating between "pages" does not t
 ### React Router
 
 ```jsx
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // ✅ Place this component once, at the top of your app, wrapping all routes.
 // It detects every route change and moves focus to the page heading.
 function RouteChangeAnnouncer() {
   const location = useLocation();
-  const headingRef = useRef(null);
 
   useEffect(() => {
     // Wait one frame for the new route's DOM to render before moving focus

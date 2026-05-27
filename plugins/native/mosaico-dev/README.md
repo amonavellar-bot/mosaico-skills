@@ -90,7 +90,7 @@ Here's an opportunity to improve the accessibility of this `<div>` container.
 **Who is affected:** Someone with low vision will have trouble reading — the text color `#aaa` on white background has a contrast ratio of 2.3:1, well below the required 4.5:1.
 
 > WCAG 2.2 — 1.4.3 Contrast (Minimum), Level AA
-> ABNT NBR 17225 — Seção 11, Requisito
+> ABNT NBR 17225 — Item 5.11.3, Requisito
 
 ```jsx
 // Before
@@ -110,8 +110,11 @@ Here's an opportunity to improve the accessibility of this `<img>`.
 // Before
 <img src="logo.png" />
 
-// After — alt="" marks it as decorative; use a description if the image conveys meaning
+// After — logo conveys brand identity, so it gets a descriptive alt
 <img src="logo.png" alt="Mosaico logo" />
+
+// If the image were purely decorative, use alt="" to tell screen readers to skip it:
+// <img src="logo.png" alt="" />
 ```
 
 ---
@@ -123,7 +126,7 @@ Here's an opportunity to improve the accessibility of this close `<div>`.
 **Who is affected:** Someone navigating by keyboard cannot reach or activate this element — `<div>` elements are not in the tab order and don't respond to Enter or Space.
 
 > WCAG 2.2 — 2.1.1 Keyboard, Level A
-> ABNT NBR 17225 — Seção 1, Requisito
+> ABNT NBR 17225 — Item 5.1.13, Requisito
 
 ```jsx
 // Before

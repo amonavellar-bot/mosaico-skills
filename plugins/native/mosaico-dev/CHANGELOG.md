@@ -1,5 +1,17 @@
 # Changelog — mosaico-dev
 
+## [1.2.0] — 2026-05-27
+
+### Fixed
+
+- `patterns-web.md` — HTML modal `FOCUSABLE` selector now excludes disabled form elements, consistent with the React version; added inline comment explaining why disabled elements are excluded
+- `patterns-web.md` — removed dead variable `headingRef = useRef(null)` from React Router SPA Routing example and its unused `useRef` import
+- `patterns-mobile.md` — Android Quick Reference table: replaced `semantics { focused = true }` (not a valid focus-movement API in Compose) with `FocusRequester().requestFocus()` in `LaunchedEffect`
+- `README.md` — ABNT citation format in example output corrected from `Seção 11`/`Seção 1` to `Item 5.11.3`/`Item 5.1.13`, matching the canonical format in SKILL.md
+- `README.md` — `<img>` alt text example comment split into two cases (informative alt vs decorative `alt=""`) to eliminate ambiguity
+
+---
+
 ## [1.1.0] — 2026-05-27
 
 ### Fixed
