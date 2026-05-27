@@ -119,6 +119,13 @@ Show original code and the corrected version, platform-aware:
 - Respond in the same language the developer writes in (PT or EN)
 - Brazilian context: reference ABNT NBR 17225, eMAG, and CI&T Mosaico group when relevant
 
+## Platform Ambiguity
+
+If the developer does not specify a platform (web or mobile):
+1. Look for clues in the code (JSX → likely React web or React Native; `.swift` → iOS; `@Composable` → Android; `.dart` → Flutter).
+2. If still ambiguous, ask: "Are you building for web or mobile? I can tailor the examples to your platform."
+3. If the developer explicitly says both, provide examples for both — web first, then mobile.
+
 ## Reference Files
 
 Load these files when you need specifics — do not load all at once:

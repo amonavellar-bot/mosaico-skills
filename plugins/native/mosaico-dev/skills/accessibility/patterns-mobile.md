@@ -248,16 +248,18 @@ function CartFeedback({ message }) {
 #### After
 
 ```jsx
-// accessibilityLiveRegion="polite" tells TalkBack/VoiceOver to announce
-// this element's content the next time the user is idle — non-interrupting
-// Use "assertive" only for urgent errors that must interrupt immediately
+// accessibilityLiveRegion="polite" announces when the user is idle — non-interrupting
+// Do NOT combine with accessibilityRole="alert": "alert" implies assertive behaviour
+// on Android/TalkBack and creates a conflict with "polite". Choose one:
+//   - Non-urgent update (cart, status): accessibilityLiveRegion="polite" only
+//   - Critical error (auth failure, payment error): accessibilityRole="alert" only
 function CartFeedback({ message }) {
   if (!message) return null;
   return (
     <Text
       style={styles.feedback}
-      accessibilityLiveRegion="polite"
-      accessibilityRole="alert"
+      accessibilityLiveRegion="polite"   // polite: waits for user to be idle
+      // accessibilityRole omitted — "alert" would override the polite behaviour
     >
       {message}
     </Text>
@@ -296,14 +298,12 @@ Semantics(
   label: 'Delete item',
   hint: 'Removes this item permanently from your list',
   button: true,
+  excludeSemantics: true, // hides child Icon from the accessibility tree — outer Semantics covers it
   child: GestureDetector(
     onTap: handleDelete,
     child: Icon(
       Icons.delete,
       size: 24,
-      // semanticLabel on Icon is an alternative to the outer Semantics widget
-      // but the outer Semantics gives more control (hint, button role, etc.)
-      semanticLabel: null, // suppressed here because Semantics above handles it
     ),
   ),
 )
@@ -482,7 +482,8 @@ Button(action: deleteItem) {
 ```swift
 // .accessibilityLabel replaces the auto-derived label with human-readable text
 // .accessibilityHint tells users WHAT WILL HAPPEN when they activate the button
-// Hints should use the imperative form: "Deletes..." not "Delete..."
+// Hints should use descriptive (not imperative) form: "Removes..." not "Remove..."
+// per Apple Human Interface Guidelines — describe the result, not the command
 Button(action: deleteItem) {
     Image(systemName: "trash.fill")
         .foregroundColor(.red)

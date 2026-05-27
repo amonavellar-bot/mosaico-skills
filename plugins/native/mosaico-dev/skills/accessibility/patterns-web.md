@@ -328,14 +328,20 @@ a:focus { outline: none; }
      style="display:none" tabindex="-1">
   <h2 id="modal-titulo">Configurações</h2>
   <p>Conteúdo do modal</p>
+  <button id="modal-primeiro-foco">Confirmar</button>
   <button onclick="fecharModal()">Fechar</button>
 </div>
 
 <script>
+// Query all focusable elements inside the modal
+const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 function abrirModal() {
   const modal = document.getElementById('modal');
   modal.style.display = 'block';
-  modal.focus(); // Move focus into the modal
+  // Move focus to the first focusable element inside the modal
+  const primeiro = modal.querySelector(FOCUSABLE);
+  if (primeiro) primeiro.focus();
 }
 
 function fecharModal() {
@@ -344,9 +350,23 @@ function fecharModal() {
   document.getElementById('btn-abrir').focus(); // Return focus to trigger
 }
 
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') fecharModal();
+// Focus trap: keep Tab and Shift+Tab cycling within the modal
+document.getElementById('modal').addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { fecharModal(); return; }
+  if (e.key !== 'Tab') return;
+
+  const modal = document.getElementById('modal');
+  const focusable = [...modal.querySelectorAll(FOCUSABLE)];
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey) {
+    // Shift+Tab on first element → wrap to last
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    // Tab on last element → wrap to first
+    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 </script>
 ```
@@ -391,8 +411,9 @@ Use native HTML elements first. Add ARIA only when native elements are not enoug
   <option value="RJ">Rio de Janeiro</option>
 </select>
 
-<!-- ✅ aria-live region — screen reader announces content changes automatically -->
-<div id="alerta" role="alert" aria-live="polite" aria-atomic="true"></div>
+<!-- ✅ role="status" + aria-live="polite" — announces non-urgent updates without interrupting the user -->
+<!-- Use role="alert" (assertive) only for critical errors that must interrupt immediately -->
+<div id="alerta" role="status" aria-live="polite" aria-atomic="true"></div>
 <script>
   // Inserting text triggers an announcement without stealing focus
   document.getElementById('alerta').textContent = 'Arquivo salvo com sucesso';
@@ -599,7 +620,8 @@ function EmailField({ value, onChange, error }) {
         autoComplete="email"
       />
       {error && (
-        <p id={errorId} role="alert">    {/* role="alert" announces immediately */}
+        // role="alert" (assertive) is correct here — a form error requires immediate announcement
+        <p id={errorId} role="alert">
           {error}
         </p>
       )}
@@ -674,7 +696,7 @@ function Notification() {
     <>
       <button type="button" onClick={handleSave}>Salvar</button>
 
-      {/* polite: waits for screen reader to finish current sentence */}
+      {/* role="status" + aria-live="polite": waits for screen reader to finish current sentence */}
       <div role="status" aria-live="polite" aria-atomic="true"
            className="sr-only">
         {message}
@@ -780,7 +802,10 @@ function enviar() {
     >
       {{ titulo }}
     </button>
-    <div :id="conteudoId" v-show="aberto">
+    <!-- :hidden removes the element from the accessibility tree when closed -->
+    <!-- v-show (display:none) also hides from AT in most browsers, but :hidden -->
+    <!-- is semantically explicit and guaranteed across all screen reader/browser combos -->
+    <div :id="conteudoId" :hidden="!aberto">
       <slot />
     </div>
   </div>
@@ -805,28 +830,23 @@ const aberto = ref(false);
 // ❌ Before: div with click handler — not keyboard accessible
 // <div (click)="selecionar()">Opção A</div>
 
-// ✅ After: host element declared as a button with keyboard support
-import { Component, Output, EventEmitter, HostListener } from '@angular/core';
+// ✅ After: selector targets a native <button> element — no role, tabindex, or keyboard
+// listener needed because <button> handles all of that natively.
+// Usage: <button app-opcao (selecionado)="onSelecionado()">Opção A</button>
+import { Component, Output, EventEmitter, HostBinding, HostListener } from '@angular/core';
 
 @Component({
-  selector: 'app-opcao',
+  selector: 'button[app-opcao]', // restrict to native <button> elements only
   template: `<ng-content></ng-content>`,
-  host: {
-    'role': 'button',
-    'tabindex': '0',        // Makes element reachable by Tab
-    '[attr.aria-pressed]': 'selecionado',
-  }
 })
 export class OpcaoComponent {
   @Output() selecionado = new EventEmitter<void>();
   ativo = false;
 
+  // aria-pressed is the only ARIA attribute needed — role and keyboard are native
+  @HostBinding('attr.aria-pressed') get ariaPressed() { return this.ativo; }
+
   @HostListener('click') onClick() { this.ativar(); }
-  @HostListener('keydown.enter') onEnter() { this.ativar(); }
-  @HostListener('keydown.space', ['$event']) onSpace(e: Event) {
-    e.preventDefault(); // Prevent page scroll
-    this.ativar();
-  }
 
   private ativar() {
     this.ativo = !this.ativo;
