@@ -1,6 +1,11 @@
 ---
 name: mosaico-dev
 description: Use when reviewing code for accessibility issues or designing a new feature with accessibility in mind, on web or mobile. Covers WCAG 2.2, ABNT NBR 17225, keyboard navigation, screen readers, color contrast, touch targets, and cognitive clarity.
+when_to_use: |
+  - User shares code and asks: "is this accessible?", "revisar acessibilidade", "review for accessibility", "check a11y", "acessibilidade"
+  - User describes a feature and asks: "how do I build this accessibly?", "o que considerar de acessibilidade?", "como fazer acessível?", "what should I consider for accessibility?"
+  - User mentions: screen reader, leitor de tela, WCAG, ABNT NBR 17225, contrast, contraste, keyboard navigation, navegação por teclado, ARIA, alt text, touch target, focus trap
+  - User asks about any UI component (button, form, modal, dropdown, table, image, navigation) in the context of accessibility or inclusion
 ---
 
 # mosaico-dev — Guia de Acessibilidade para Devs
