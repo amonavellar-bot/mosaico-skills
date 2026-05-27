@@ -7,6 +7,18 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.2.0] — 2026-05-27
+
+### Fixed
+
+- `patterns-web.md` — HTML modal `FOCUSABLE` selector now excludes disabled form elements (`input:not([disabled])`, `select:not([disabled])`, `textarea:not([disabled])`), matching the React version; both examples are now consistent
+- `patterns-web.md` — removed unused `headingRef = useRef(null)` dead variable from React Router SPA Routing example; `useRef` import removed from that snippet
+- `patterns-mobile.md` — Android Quick Reference: replaced non-existent `semantics { focused = true }` with the correct `FocusRequester().requestFocus()` in `LaunchedEffect` API
+- `plugins/native/mosaico-dev/README.md` — ABNT citation format corrected in example output: `Seção 11` → `Item 5.11.3` and `Seção 1` → `Item 5.1.13`, matching the format mandated by SKILL.md
+- `plugins/native/mosaico-dev/README.md` — clarified `<img>` alt text guidance: separated decorative (`alt=""`) vs informative (`alt="description"`) cases that were conflated in the same code comment
+
+---
+
 ## [1.1.0] — 2026-05-27
 
 ### Fixed

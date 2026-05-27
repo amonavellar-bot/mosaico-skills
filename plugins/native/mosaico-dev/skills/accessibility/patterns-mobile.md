@@ -820,7 +820,7 @@ Box(
 |---|---|---|
 | Icon button with no label | All | Add `accessibilityLabel` (RN) / `semanticLabel` (Flutter) / `.accessibilityLabel` (iOS) / `contentDescription` (Android) |
 | Touch target smaller than 24×24 | All | Set `minWidth/minHeight: 44` (RN) / `constraints: BoxConstraints(min 48×48)` (Flutter) / `.frame(minWidth:44, minHeight:44)` (iOS) / `Modifier.size(48.dp)` (Android) |
-| New screen focus not moved | All | Use `AccessibilityInfo.setAccessibilityFocus` (RN) / `FocusNode.requestFocus` in `initState` (Flutter) / `@AccessibilityFocusState` on appear (iOS) / `semantics { focused = true }` (Android) |
+| New screen focus not moved | All | Use `AccessibilityInfo.setAccessibilityFocus` (RN) / `FocusNode.requestFocus` in `initState` (Flutter) / `@AccessibilityFocusState` on appear (iOS) / `FocusRequester().requestFocus()` in `LaunchedEffect` (Android) |
 | Placeholder as only field label | RN / Flutter | Use `accessibilityLabelledBy` (RN) / `Semantics(label:)` wrapping the field (Flutter) |
 | `accessibilityRole="alert"` + `accessibilityLiveRegion="polite"` | RN | Remove the role conflict: use one or the other, never both on the same element |
 | `Icon(contentDescription = null)` on interactive element | Android | Set a meaningful `contentDescription`; `null` is only correct for purely decorative icons |
