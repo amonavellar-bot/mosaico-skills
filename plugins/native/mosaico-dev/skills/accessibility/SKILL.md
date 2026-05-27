@@ -1,57 +1,71 @@
 ---
-name: mosaico-dev
-description: Use when reviewing code for accessibility issues or designing a new feature with accessibility in mind, on web or mobile. Covers WCAG 2.2, ABNT NBR 17225, keyboard navigation, screen readers, color contrast, touch targets, and cognitive clarity.
+name: Mosaico Accessibility
+description: Use when reviewing code for accessibility issues, designing a new feature with accessibility in mind, or explaining an accessibility concept. Covers WCAG 2.2, ABNT NBR 17225, keyboard navigation, screen readers, color contrast, touch targets, and cognitive clarity.
 when_to_use: |
   - User shares code and asks: "is this accessible?", "revisar acessibilidade", "review for accessibility", "check a11y", "acessibilidade"
   - User describes a feature and asks: "how do I build this accessibly?", "o que considerar de acessibilidade?", "como fazer acessível?", "what should I consider for accessibility?"
+  - User asks to explain an accessibility concept: "what is focus trap?", "o que é aria-live?", "como funciona screen reader?", "explain WCAG", "o que significa ARIA?"
   - User mentions: screen reader, leitor de tela, WCAG, ABNT NBR 17225, contrast, contraste, keyboard navigation, navegação por teclado, ARIA, alt text, touch target, focus trap
   - User asks about any UI component (button, form, modal, dropdown, table, image, navigation) in the context of accessibility or inclusion
 ---
 
-# mosaico-dev — Guia de Acessibilidade para Devs
+# Mosaico Accessibility — Guia de Acessibilidade para Devs
 
 ## Overview
 
 This skill helps you build and review interfaces that work for everyone — including people who use screen readers, navigate by keyboard, have low vision, or have cognitive differences.
 
-Two modes:
+Three modes:
 - **Review mode** — share code → get a categorized audit with full fix walkthroughs
 - **Build mode** — describe a feature → get a proactive checklist and accessible code templates
+- **Explain mode** — ask a concept question → get a plain-language explanation with a real example
 
 Based on WCAG 2.2, ABNT NBR 17225, and CI&T's accessibility standards (Mosaico group).
 
 ## How to Trigger
 
-**Review mode:** Share code and ask "is this accessible?" / "review for accessibility" / "revisar acessibilidade" could be asked in portuguese or in english
+**Review mode:** Share code and ask "is this accessible?" / "review for accessibility" / "revisar acessibilidade"
 
-**Build mode:** Describe a feature and ask "how do I build this accessibly?" / "o que considerar de acessibilidade aqui?"could be asked in portuguese or in english
+**Build mode:** Describe a feature and ask "how do I build this accessibly?" / "o que considerar de acessibilidade aqui?"
 
-## Four Audit Categories
+**Explain mode:** Ask a concept question like "what is focus trap?" / "como funciona um leitor de tela?" / "o que é ARIA?"
 
-| Category | What it checks |
-|---|---|
-| **Visual** | Color contrast (min 4.5:1 text, 3:1 large text), font size, color as sole differentiator, 200% zoom |
-| **Motor** | Keyboard navigation, focus order, touch targets (min 24×24px, recommended 44×44px), no keyboard traps |
-| **Cognitive** | Plain language, consistent layout, helpful error messages, no surprise context changes |
-| **Assistive Tech** | Screen reader support, ARIA roles/labels/descriptions, semantic HTML, alt text, form labels |
+All modes work in Portuguese and English — respond in the same language the developer writes in.
+
+## Audit Categories (aligned with WCAG 2.2 principles)
+
+| Category | WCAG Principle | What it checks |
+|---|---|---|
+| **Perceivable** | Principle 1 | Color contrast (min 4.5:1 text, 3:1 large/UI), alt text, captions, info not conveyed by color alone, 200% zoom, reflow |
+| **Operable** | Principle 2 | Keyboard navigation, focus order, no keyboard traps, touch targets (min 24×24px, recommended 44×44px), skip links, no time limits without control |
+| **Understandable** | Principle 3 | Plain language, consistent layout, helpful error messages, no surprise context changes, visible labels, input purpose |
+| **Robust** | Principle 4 | Semantic HTML, ARIA roles/labels/descriptions, valid markup, screen reader announcements, status messages |
 
 ## Review Mode — Process
 
 1. Read the shared code
 2. For each issue found, deliver the **Correction Walkthrough** (format below)
-3. Group findings by category (Visual / Motor / Cognitive / Assistive Tech)
-4. End with a **Priority Summary**:
-   - [Required]: WCAG Level A/AA, ABNT Requisito
-   - [Recommended]: WCAG Level AAA, ABNT Recomendação
-
-If no issues found in a category, say so explicitly: "Visual: ✅ Nothing to flag here."
+3. Group findings by WCAG category (Perceivable / Operable / Understandable / Robust)
+4. If no issues found in a category, say so explicitly: "Perceivable: ✅ Nothing to flag here."
+5. End with a **Priority Summary** using three severity tiers:
+   - **[Blocker — Level A]**: blocks users entirely; must fix before shipping
+   - **[Required — Level AA]**: degrades experience significantly; standard compliance target
+   - **[Recommended — Level AAA / ABNT Recomendação]**: enhancement; fix when possible
 
 ## Build Mode — Process
 
-1. Identify which categories apply to the described feature
+1. Identify which WCAG categories apply to the described feature
 2. Deliver a proactive checklist of what to consider before writing code
 3. Provide accessible code templates for the relevant platform
 4. Reference applicable WCAG 2.2 criteria and ABNT NBR 17225 items
+
+## Explain Mode — Process
+
+1. Give a plain-language definition (1–2 sentences max)
+2. Explain who benefits and why it matters
+3. Show a minimal before/after code example on the relevant platform
+4. Reference the applicable WCAG 2.2 criterion and ABNT item if relevant
+5. If the concept has a common misconception, address it directly
 
 ## Build Mode Output Format
 

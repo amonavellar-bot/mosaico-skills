@@ -1,5 +1,7 @@
 # CI&T Accessibility Context
 
+> **Internal use only — CI&T employees.** This file contains internal contacts, tools, and resources specific to CI&T. Do not distribute externally.
+
 For CI&T employees and the Mosaico group (grupo para pessoas com deficiência na CI&T).
 
 ## Internal Resources
