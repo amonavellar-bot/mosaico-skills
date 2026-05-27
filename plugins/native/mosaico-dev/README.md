@@ -8,7 +8,25 @@ Audits code for accessibility issues and guides feature design on web and mobile
 
 | Skill | Invocation | Description |
 |---|---|---|
-| `accessibility` | `/mosaico-dev:accessibility` | Accessibility audit (review mode) and proactive checklist (build mode) |
+| `accessibility` | `/mosaico-dev:accessibility` | Accessibility audit (review mode), proactive checklist (build mode), and concept explanations (explain mode) |
+
+## Installation
+
+```bash
+# 1. Register the marketplace
+claude plugin marketplace add amonavellar-bot/mosaico-skills
+
+# 2. Install the plugin
+claude plugin install mosaico-dev
+```
+
+Or locally from a cloned repo:
+
+```bash
+git clone https://github.com/amonavellar-bot/mosaico-skills.git
+claude plugin marketplace add ./mosaico-skills
+claude plugin install mosaico-dev
+```
 
 ## Usage
 
@@ -50,32 +68,32 @@ Prompt: `Revisar acessibilidade nesse componente:`
 **Output** — categorized audit with 6 issues found:
 
 ```
-### Visual
+### Perceivable
 Issue 1 — Low contrast: #aaa on #fff = 2.3:1 (required: 4.5:1)
 WCAG 2.2 — 1.4.3 Contrast (Minimum), Level AA
 ABNT NBR 17225 — Seção 11, Requisito
 
-### Motor
+Issue 5 — <img> with no alt: screen reader announces filename
+WCAG 2.2 — 1.1.1 Non-text Content, Level A
+
+### Operable
 Issue 2 — <div> as close button: not keyboard reachable, no Enter/Space support
 WCAG 2.2 — 2.1.1 Keyboard, Level A
 
 Issue 3 — <div> as submit button: same problem
 WCAG 2.2 — 2.1.1 Keyboard, Level A / 4.1.2 Name, Role, Value, Level A
 
-### Cognitive
+### Understandable
 Issue 4 — Placeholders as labels: disappear on type, no persistent label
 WCAG 2.2 — 1.3.1 Info and Relationships, Level A
 
-### Assistive Tech
-Issue 5 — <img> with no alt: screen reader announces filename
-WCAG 2.2 — 1.1.1 Non-text Content, Level A
-
+### Robust
 Issue 6 — No <form> element: no form landmark, Enter-to-submit broken
 WCAG 2.2 — 1.3.1 Info and Relationships, Level A
 ```
 
-Each issue includes a before/after code fix and a Priority Summary
-([Required] vs [Recommended]) at the end.
+Each issue includes a before/after code fix and a Priority Summary with three
+severity tiers ([Blocker — Level A] / [Required — Level AA] / [Recommended]) at the end.
 
 ---
 

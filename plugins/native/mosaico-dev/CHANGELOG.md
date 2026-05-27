@@ -4,8 +4,9 @@
 
 ### Added
 
-- Review mode: categorized audit (Visual, Motor, Cognitive, Assistive Tech) with Correction Walkthrough format
+- Review mode: categorized audit (Perceivable, Operable, Understandable, Robust — aligned with WCAG 2.2 principles) with Correction Walkthrough format and three-tier severity labels
 - Build mode: proactive checklist and code templates before feature development
+- Explain mode: plain-language explanations for accessibility concepts with code examples
 - `SKILL.md` — skill behavior, tone guide, and reference file manifest
 - `wcag-quick-ref.md` — WCAG 2.2 reference (78 success criteria, all levels)
 - `checklist-abnt.md` — ABNT NBR 17225:2024 reference (146 items, 16 sections)

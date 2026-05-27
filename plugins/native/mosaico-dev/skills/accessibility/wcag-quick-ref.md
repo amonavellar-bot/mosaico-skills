@@ -1,6 +1,6 @@
 # WCAG 2.2 Quick Reference
 
-W3C Recommendation, December 2024. 4 principles, 13 guidelines, 78 success criteria.
+W3C Recommendation, 5 October 2023. 4 principles, 13 guidelines, 78 success criteria.
 
 **Levels:** A (minimum) · AA (standard target) · AAA (enhanced)
 

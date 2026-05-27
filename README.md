@@ -10,21 +10,26 @@ A Claude Code plugin that turns your AI assistant into an accessibility-aware de
 
 | Plugin | Description |
 |---|---|
-| `mosaico-dev` | Friendly accessibility guide — review mode and build mode for web and mobile |
+| `mosaico-dev` | Friendly accessibility guide — review, build, and explain modes for web and mobile |
 
 ---
 
 ## Installation
 
 ```bash
-claude plugin install github:ciandt-mosaico/mosaico-skills/plugins/native/mosaico-dev
+# 1. Register the marketplace
+claude plugin marketplace add amonavellar-bot/mosaico-skills
+
+# 2. Install the plugin
+claude plugin install mosaico-dev
 ```
 
 Or install locally from a cloned repo:
 
 ```bash
-git clone <repo-url> mosaico-skills
-claude plugin install ./mosaico-skills/plugins/native/mosaico-dev
+git clone https://github.com/amonavellar-bot/mosaico-skills.git
+claude plugin marketplace add ./mosaico-skills
+claude plugin install mosaico-dev
 ```
 
 Verify the install:
@@ -59,7 +64,7 @@ Revisar acessibilidade nesse formulário:
 </form>
 ```
 
-Claude will respond with a categorized audit across four areas: **Visual**, **Motor**, **Cognitive**, and **Assistive Tech** — each issue with a before/after code fix and the applicable WCAG 2.2 / ABNT NBR 17225 reference.
+Claude will respond with a categorized audit across four areas aligned with WCAG 2.2 principles: **Perceivable**, **Operable**, **Understandable**, and **Robust** — each issue with a before/after code fix, the applicable WCAG 2.2 / ABNT NBR 17225 reference, and a severity label ([Blocker], [Required], or [Recommended]).
 
 ### Build mode — design a feature accessibly
 
@@ -113,7 +118,7 @@ mosaico-skills/
             ├── .claude-plugin/
             │   └── plugin.json  # plugin metadata
             └── skills/
-                └── mosaico-dev/
+                └── accessibility/
                     ├── SKILL.md             # skill behavior definition
                     ├── checklist-abnt.md    # ABNT NBR 17225 reference
                     ├── wcag-quick-ref.md    # WCAG 2.2 quick reference

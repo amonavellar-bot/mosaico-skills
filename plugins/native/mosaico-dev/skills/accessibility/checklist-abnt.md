@@ -7,7 +7,7 @@ Brazilian accessibility standard (adaptation of WCAG 2.1). Published: 2024. Sour
 - **Requisito** = obrigatório (maps to WCAG Level A/AA)
 - **Recomendação** = recomendado (maps to WCAG Level AAA or best practice)
 
-> The standard covers 146 checklist items across 15 sections.
+> The standard covers 146 checklist items across 16 sections.
 > Cumprindo um item de Recomendação, geralmente cumpre-se também o Requisito equivalente de nível inferior.
 
 ---

@@ -44,8 +44,8 @@ All modes work in Portuguese and English — respond in the same language the de
 ## Review Mode — Process
 
 1. Read the shared code
-2. For each issue found, deliver the **Correction Walkthrough** (format below)
-3. Group findings by WCAG category (Perceivable / Operable / Understandable / Robust)
+2. Group findings by WCAG category (Perceivable / Operable / Understandable / Robust)
+3. For each issue, deliver the **Correction Walkthrough** (format below) under its category heading
 4. If no issues found in a category, say so explicitly: "Perceivable: ✅ Nothing to flag here."
 5. End with a **Priority Summary** using three severity tiers:
    - **[Blocker — Level A]**: blocks users entirely; must fix before shipping

@@ -510,7 +510,8 @@ Every interactive element must be reachable and operable with the keyboard alone
 
 **Touch-target minimum size (44×44px):**
 ```css
-/* ✅ Minimum tap target for mobile — recommended by eMAG and WCAG 2.5.8 */
+/* ✅ Enhanced tap target (44×44px) — WCAG 2.5.5 Level AAA and iOS/Android HIG recommendation
+   Note: WCAG 2.5.8 Level AA requires only 24×24px minimum; 44×44px is the preferred safe target */
 button,
 a,
 [role="button"] {
