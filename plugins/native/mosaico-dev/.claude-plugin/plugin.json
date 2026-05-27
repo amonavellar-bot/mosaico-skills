@@ -8,9 +8,6 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/amonavellar-bot/mosaico-skills#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/amonavellar-bot/mosaico-skills.git"
-  },
+  "repository": "https://github.com/amonavellar-bot/mosaico-skills",
   "keywords": ["accessibility", "a11y", "wcag", "abnt", "screen-reader", "mobile", "web", "ciandt", "mosaico"]
 }
