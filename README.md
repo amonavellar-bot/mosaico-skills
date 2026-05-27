@@ -4,7 +4,7 @@ Accessibility skills for Claude Code — by the [CI&T Mosaico group](mailto:amon
 
 ## What is this?
 
-A Claude Code plugin that turns your AI assistant into an accessibility-aware development partner. It audits code for accessibility issues and guides feature design across web and mobile platforms, based on WCAG 2.2 and ABNT NBR 17225.
+A Claude Code plugin that turns your AI assistant into an accessibility-aware development partner. It audits code for accessibility issues, guides feature design across web and mobile platforms, and explains accessibility concepts — based on WCAG 2.2 and ABNT NBR 17225.
 
 ### Plugins included
 
@@ -42,7 +42,13 @@ claude plugins list
 
 ## Usage
 
-After installation, the skill activates automatically when Claude Code detects accessibility-related intent in your prompts. No slash command needed.
+**The skill activates automatically** — Claude detects accessibility-related intent in your prompts and triggers the skill without any command. Just write naturally, in Portuguese or English.
+
+If you ever need to invoke it explicitly, use:
+
+```
+/mosaico-dev:accessibility
+```
 
 ### Review mode — audit existing code
 
@@ -64,11 +70,11 @@ Revisar acessibilidade nesse formulário:
 </form>
 ```
 
-Claude will respond with a categorized audit across four areas aligned with WCAG 2.2 principles: **Perceivable**, **Operable**, **Understandable**, and **Robust** — each issue with a before/after code fix, the applicable WCAG 2.2 / ABNT NBR 17225 reference, and a severity label ([Blocker], [Required], or [Recommended]).
+Claude responds with a categorized audit across four areas aligned with WCAG 2.2 principles: **Perceivable**, **Operable**, **Understandable**, and **Robust** — each issue with a before/after code fix, the applicable WCAG 2.2 / ABNT NBR 17225 reference, and a severity label ([Blocker — Level A], [Required — Level AA], or [Recommended]).
 
 ### Build mode — design a feature accessibly
 
-Describe what you're building:
+Describe what you're building before writing code:
 
 ```
 I'm building a modal dialog with a close button and a form inside. What should I consider for accessibility?
@@ -78,7 +84,25 @@ I'm building a modal dialog with a close button and a form inside. What should I
 Vou criar um dropdown de seleção de país. O que considerar de acessibilidade?
 ```
 
-Claude will give you a proactive checklist and accessible code templates before you write a single line.
+Claude gives you a proactive checklist and accessible code templates before you write a single line.
+
+### Explain mode — understand accessibility concepts
+
+Ask a concept question:
+
+```
+What is a focus trap and when should I use one?
+```
+
+```
+Como funciona um leitor de tela? O que ele anuncia quando encontra um botão?
+```
+
+```
+O que é ARIA e quando devo usar?
+```
+
+Claude gives a plain-language explanation, names who benefits and why, and shows a minimal before/after code example.
 
 ---
 

@@ -2,11 +2,11 @@
 
 Accessibility skill for Claude Code — CI&T Mosaico group.
 
-Audits code for accessibility issues and guides feature design on web and mobile platforms, based on WCAG 2.2 and ABNT NBR 17225.
+Audits code for accessibility issues, guides feature design on web and mobile platforms, and explains accessibility concepts — based on WCAG 2.2 and ABNT NBR 17225.
 
 ## Skills
 
-| Skill | Invocation | Description |
+| Skill | Manual invocation | Description |
 |---|---|---|
 | `accessibility` | `/mosaico-dev:accessibility` | Accessibility audit (review mode), proactive checklist (build mode), and concept explanations (explain mode) |
 
@@ -30,7 +30,13 @@ claude plugin install mosaico-dev
 
 ## Usage
 
-The skill activates automatically when Claude detects accessibility-related intent. No slash command needed.
+**The skill activates automatically.** Claude detects accessibility-related intent in your prompts and triggers the skill without any command — just write naturally in Portuguese or English.
+
+If you need to invoke it explicitly:
+
+```
+/mosaico-dev:accessibility
+```
 
 **Review mode** — share code and ask for a review:
 ```
@@ -41,6 +47,14 @@ Revisar acessibilidade nesse componente:
 **Build mode** — describe a feature before building it:
 ```
 I'm building a modal with a form inside. What should I consider for accessibility?
+```
+
+**Explain mode** — ask a concept question:
+```
+O que é focus trap e quando devo usar?
+```
+```
+What is ARIA and when should I reach for it?
 ```
 
 ## Example
@@ -65,35 +79,110 @@ export function LoginForm() {
 
 Prompt: `Revisar acessibilidade nesse componente:`
 
-**Output** — categorized audit with 6 issues found:
+**Output** — categorized audit, 6 issues found:
 
-```
+---
+
 ### Perceivable
-Issue 1 — Low contrast: #aaa on #fff = 2.3:1 (required: 4.5:1)
-WCAG 2.2 — 1.4.3 Contrast (Minimum), Level AA
-ABNT NBR 17225 — Seção 11, Requisito
 
-Issue 5 — <img> with no alt: screen reader announces filename
-WCAG 2.2 — 1.1.1 Non-text Content, Level A
+Here's an opportunity to improve the accessibility of this `<div>` container.
+
+**Who is affected:** Someone with low vision will have trouble reading — the text color `#aaa` on white background has a contrast ratio of 2.3:1, well below the required 4.5:1.
+
+> WCAG 2.2 — 1.4.3 Contrast (Minimum), Level AA
+> ABNT NBR 17225 — Seção 11, Requisito
+
+```jsx
+// Before
+<div style={{ color: '#aaa', background: '#fff' }}>
+
+// After — contrast ratio now 7:1
+<div style={{ color: '#555', background: '#fff' }}>
+```
+
+Here's an opportunity to improve the accessibility of this `<img>`.
+
+**Who is affected:** Someone using a screen reader will hear the filename announced ("logo.png") instead of a meaningful description, or nothing at all.
+
+> WCAG 2.2 — 1.1.1 Non-text Content, Level A
+
+```jsx
+// Before
+<img src="logo.png" />
+
+// After — alt="" marks it as decorative; use a description if the image conveys meaning
+<img src="logo.png" alt="Mosaico logo" />
+```
+
+---
 
 ### Operable
-Issue 2 — <div> as close button: not keyboard reachable, no Enter/Space support
-WCAG 2.2 — 2.1.1 Keyboard, Level A
 
-Issue 3 — <div> as submit button: same problem
-WCAG 2.2 — 2.1.1 Keyboard, Level A / 4.1.2 Name, Role, Value, Level A
+Here's an opportunity to improve the accessibility of this close `<div>`.
 
-### Understandable
-Issue 4 — Placeholders as labels: disappear on type, no persistent label
-WCAG 2.2 — 1.3.1 Info and Relationships, Level A
+**Who is affected:** Someone navigating by keyboard cannot reach or activate this element — `<div>` elements are not in the tab order and don't respond to Enter or Space.
 
-### Robust
-Issue 6 — No <form> element: no form landmark, Enter-to-submit broken
-WCAG 2.2 — 1.3.1 Info and Relationships, Level A
+> WCAG 2.2 — 2.1.1 Keyboard, Level A
+> ABNT NBR 17225 — Seção 1, Requisito
+
+```jsx
+// Before
+<div onClick={() => alert('close')}>X</div>
+
+// After — <button> is focusable, keyboard-operable, and announces its role to screen readers
+<button type="button" aria-label="Fechar" onClick={() => alert('close')}>X</button>
 ```
 
-Each issue includes a before/after code fix and a Priority Summary with three
-severity tiers ([Blocker — Level A] / [Required — Level AA] / [Recommended]) at the end.
+---
+
+### Understandable
+
+Here's an opportunity to improve the accessibility of these `<input>` fields.
+
+**Who is affected:** Someone with a cognitive disability — or anyone who pauses mid-form — loses the field label as soon as they start typing, because placeholders disappear on input.
+
+> WCAG 2.2 — 1.3.1 Info and Relationships, Level A
+
+```jsx
+// Before
+<input type="text" placeholder="Digite seu email" />
+
+// After — visible <label> persists while the user types
+<label htmlFor="email">Email</label>
+<input id="email" type="email" placeholder="ex: nome@empresa.com" />
+```
+
+---
+
+### Robust
+
+Here's an opportunity to improve the accessibility of this form structure.
+
+**Who is affected:** Someone using a screen reader won't be able to identify this as a form landmark, and pressing Enter to submit won't work — there's no `<form>` element wrapping the inputs.
+
+> WCAG 2.2 — 1.3.1 Info and Relationships, Level A
+
+```jsx
+// Before
+<div onClick={() => console.log('login')} style={{ background: '#ccc', padding: 8 }}>
+  Entrar
+</div>
+
+// After — semantic <form> + <button type="submit"> enable keyboard submission and screen reader landmark
+<form onSubmit={handleLogin}>
+  ...
+  <button type="submit">Entrar</button>
+</form>
+```
+
+---
+
+**Priority Summary**
+
+| Severity | Issues |
+|---|---|
+| [Blocker — Level A] | Missing alt text · `<div>` as close button · `<div>` as submit button · No `<form>` element · Placeholders as sole labels |
+| [Required — Level AA] | Low contrast (#aaa on white) |
 
 ---
 
