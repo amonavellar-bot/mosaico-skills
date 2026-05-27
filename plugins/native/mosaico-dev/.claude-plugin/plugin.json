@@ -5,5 +5,9 @@
   "author": {
     "name": "Amon Avellar",
     "email": "amon.avellar@ciandt.com"
-  }
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/amonavellar-bot/mosaico-skills#readme",
+  "repository": "https://github.com/amonavellar-bot/mosaico-skills",
+  "keywords": ["accessibility", "a11y", "wcag", "abnt", "screen-reader", "mobile", "web", "ciandt", "mosaico"]
 }

@@ -1,12 +1,13 @@
 # Checklist ABNT NBR 17225
 
-Brazilian accessibility standard (adaptation of WCAG). Source: Academia de Acessibilidade.
+Brazilian accessibility standard (adaptation of WCAG 2.1). Published: 2024. Source: Academia de Acessibilidade.
+> **Version note:** This reference reflects ABNT NBR 17225:2024. If a newer edition is released, update this file and bump the version in CHANGELOG.md.
 
 **Classificações:**
 - **Requisito** = obrigatório (maps to WCAG Level A/AA)
 - **Recomendação** = recomendado (maps to WCAG Level AAA or best practice)
 
-> The standard covers 146 checklist items across 15 sections.
+> The standard covers 146 checklist items across 16 sections.
 > Cumprindo um item de Recomendação, geralmente cumpre-se também o Requisito equivalente de nível inferior.
 
 ---
