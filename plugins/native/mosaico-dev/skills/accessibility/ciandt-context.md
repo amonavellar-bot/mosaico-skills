@@ -35,6 +35,9 @@ Although not specific to the web, the ADA has been interpreted by some courts as
 **Directive (EU) 2016/2102**
 This directive, which entered into force in 2016, establishes accessibility requirements for websites and mobile applications of public bodies in EU member states. It requires conformance with WCAG 2.1 Level AA as the accessibility standard.
 
+**European Accessibility Act — EAA (Directive 2019/882)**
+Extends accessibility requirements to the private sector. Covers products and services including e-commerce, banking, transport apps, e-books, and consumer electronics. Member states were required to transpose it into national law by June 2022; the compliance deadline for private-sector organisations is **June 28, 2025**. CI&T clients operating in Europe may be directly affected. Reference standard: EN 301 549 (aligned with WCAG 2.1 AA).
+
 ## Assistive Technologies
 
 Assistive technologies are tools and resources that help people with disabilities access and use computers and other digital devices, overcoming barriers to information and communication. They play a fundamental role in digital inclusion, enabling individuals with diverse special needs to fully participate in the digital society.
@@ -138,9 +141,9 @@ Digital accessibility, often seen only as legal compliance or social responsibil
 
 ### People with Disabilities
 
-- More than **17% of the Brazilian population** has some type of disability (current data).
-- Compared to 2010 data, **45% of the population** has some degree of disability (Censo Demográfico 2010 and PNS 2019 surveys).
-- People with disabilities have an estimated **purchasing power of R$ 22 billion per year** in Brazil (Accenture study, 2018).
+- **Censo 2022 (IBGE):** approximately **18.6 million people** (8.9% of the population) have a severe disability, using the Washington Group's more restrictive methodology adopted in 2022.
+- **PNS 2019 / Censo 2010:** under the broader methodology (any degree of difficulty), approximately **45% of the population** reported some level of difficulty in vision, hearing, mobility, or cognition. Both figures are accurate — they use different methodological criteria. The 45% figure includes mild difficulties; the 8.9% figure covers only severe disabilities.
+- People with disabilities have an estimated **purchasing power of R$ 22 billion per year** in Brazil (Accenture study, 2018 — indicative figure; actual current purchasing power may be higher).
 - Improved financial conditions for people with disabilities come from companies offering opportunities beyond legal hiring quotas.
 
 ### Elderly Population
