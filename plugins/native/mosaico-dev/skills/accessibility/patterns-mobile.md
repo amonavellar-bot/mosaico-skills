@@ -811,3 +811,20 @@ Box(
     )
 }
 ```
+
+---
+
+## Quick Reference: Common Mistakes (Mobile)
+
+| Mistake | Platform | Fix |
+|---|---|---|
+| Icon button with no label | All | Add `accessibilityLabel` (RN) / `semanticLabel` (Flutter) / `.accessibilityLabel` (iOS) / `contentDescription` (Android) |
+| Touch target smaller than 24×24 | All | Set `minWidth/minHeight: 44` (RN) / `constraints: BoxConstraints(min 48×48)` (Flutter) / `.frame(minWidth:44, minHeight:44)` (iOS) / `Modifier.size(48.dp)` (Android) |
+| New screen focus not moved | All | Use `AccessibilityInfo.setAccessibilityFocus` (RN) / `FocusNode.requestFocus` in `initState` (Flutter) / `@AccessibilityFocusState` on appear (iOS) / `semantics { focused = true }` (Android) |
+| Placeholder as only field label | RN / Flutter | Use `accessibilityLabelledBy` (RN) / `Semantics(label:)` wrapping the field (Flutter) |
+| `accessibilityRole="alert"` + `accessibilityLiveRegion="polite"` | RN | Remove the role conflict: use one or the other, never both on the same element |
+| `Icon(contentDescription = null)` on interactive element | Android | Set a meaningful `contentDescription`; `null` is only correct for purely decorative icons |
+| `accessibilityLiveRegion` assumed to work on iOS | RN | This prop has inconsistent VoiceOver support; test on device; prefer `AccessibilityInfo.announceForAccessibility()` for iOS announcements |
+| Hardcoded font size (`fontSize: 16`) | iOS / Android | Use `.font(.body)` / semantic TextStyle (iOS) or `MaterialTheme.typography` (Android) to respect Dynamic Type / font scale |
+| Missing `excludeSemantics: true` on wrapper | Flutter | When `Semantics` wraps a widget that has its own label, add `excludeSemantics: true` to prevent double-reading |
+| Hints in imperative form ("Delete…") | iOS | Use descriptive form per Apple HIG: "Deletes…" / "Removes…" — describe the result, not the command |

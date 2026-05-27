@@ -10,7 +10,7 @@
     {
       "name": "mosaico-dev",
       "description": "(mosaico-ciandt) Friendly accessibility guide for developers — audits code and guides feature design for web and mobile platforms, based on WCAG 2.2 and ABNT NBR 17225",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Amon Avellar",
         "email": "amon.avellar@ciandt.com"

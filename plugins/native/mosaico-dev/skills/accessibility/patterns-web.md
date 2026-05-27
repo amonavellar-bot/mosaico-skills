@@ -630,37 +630,67 @@ function EmailField({ value, onChange, error }) {
 }
 ```
 
-### 3. Focus management after modal open/close
+### 3. Focus management after modal open/close (with focus trap)
 
 ```jsx
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
-// ✅ Modal that moves focus in on open and back on close
-function Modal({ isOpen, onClose, title, children }) {
-  const closeButtonRef = useRef(null);
-  const triggerRef = useRef(null);
+const FOCUSABLE_SELECTORS =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+// ✅ Modal with focus trap: focus moves in on open, stays inside while open,
+//    returns to trigger on close, and closes on Escape.
+function Modal({ isOpen, onClose, title, children, triggerRef }) {
+  const dialogRef = useRef(null);
+
+  // Move focus into the modal when it opens
   useEffect(() => {
-    if (isOpen) {
-      // Move focus to the close button when modal opens
-      closeButtonRef.current?.focus();
-    }
+    if (!isOpen || !dialogRef.current) return;
+    const first = dialogRef.current.querySelector(FOCUSABLE_SELECTORS);
+    if (first) first.focus();
   }, [isOpen]);
 
-  function handleClose() {
-    onClose();
-    // Return focus to whatever triggered the modal
-    triggerRef.current?.focus();
-  }
+  // Return focus to the trigger element when modal closes
+  useEffect(() => {
+    if (!isOpen && triggerRef?.current) {
+      triggerRef.current.focus();
+    }
+  }, [isOpen, triggerRef]);
 
-  function handleKeyDown(e) {
-    if (e.key === 'Escape') handleClose();
-  }
+  // Focus trap: keep Tab/Shift+Tab cycling within the dialog
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = [...dialogRef.current.querySelectorAll(FOCUSABLE_SELECTORS)];
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        // Shift+Tab on first element → jump to last
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        // Tab on last element → jump to first
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    },
+    [onClose]
+  );
 
   if (!isOpen) return null;
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
@@ -668,12 +698,17 @@ function Modal({ isOpen, onClose, title, children }) {
     >
       <h2 id="modal-title">{title}</h2>
       {children}
-      <button ref={closeButtonRef} type="button" onClick={handleClose}>
+      <button type="button" onClick={onClose}>
         Fechar
       </button>
     </div>
   );
 }
+
+// Usage — pass a ref to the element that triggered the modal so focus returns on close:
+// const btnRef = useRef(null);
+// <button ref={btnRef} onClick={() => setOpen(true)}>Abrir</button>
+// <Modal isOpen={open} onClose={() => setOpen(false)} title="..." triggerRef={btnRef}>...</Modal>
 ```
 
 ### 4. Live region for dynamic notifications
@@ -946,6 +981,111 @@ export class A11yAnnouncerService {
 // Usage in a component:
 // this.announcer.announce('Relatório exportado com sucesso.');
 ```
+
+---
+
+## SPA Routing Focus Management
+
+In single-page apps (React, Vue, Angular), navigating between "pages" does not trigger a browser page load — focus stays wherever it was on the previous route, and the new page heading is never announced. This is one of the most common and least-addressed accessibility gaps in SPAs.
+
+**The fix for all frameworks:** after a route change, move focus to the first meaningful element on the new view (usually the `<h1>`) and announce the new page title.
+
+### React Router
+
+```jsx
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+
+// ✅ Place this component once, at the top of your app, wrapping all routes.
+// It detects every route change and moves focus to the page heading.
+function RouteChangeAnnouncer() {
+  const location = useLocation();
+  const headingRef = useRef(null);
+
+  useEffect(() => {
+    // Wait one frame for the new route's DOM to render before moving focus
+    const timer = setTimeout(() => {
+      const heading = document.querySelector('h1');
+      if (heading) {
+        // tabIndex="-1" allows programmatic focus without showing a focus ring
+        heading.setAttribute('tabindex', '-1');
+        heading.focus();
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  return null;
+}
+
+// In App.jsx:
+// <BrowserRouter>
+//   <RouteChangeAnnouncer />
+//   <Routes>...</Routes>
+// </BrowserRouter>
+```
+
+### Vue Router
+
+```javascript
+// router/index.js
+import { createRouter, createWebHistory } from 'vue-router';
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [ /* ... */ ],
+});
+
+// After each navigation, move focus to the page <h1>
+router.afterEach(() => {
+  // nextTick ensures the new route's component has rendered
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      const heading = document.querySelector('h1');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus();
+      }
+    });
+  });
+});
+
+export default router;
+```
+
+### Angular Router
+
+```typescript
+// app.component.ts
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-root',
+  template: `<router-outlet></router-outlet>`,
+})
+export class AppComponent implements OnInit {
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        // setTimeout defers until after Angular has rendered the new route
+        setTimeout(() => {
+          const heading = document.querySelector<HTMLElement>('h1');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus();
+          }
+        }, 100);
+      });
+  }
+}
+```
+
+> **Why `tabindex="-1"` on the heading?** Headings are not natively focusable. Adding `tabindex="-1"` allows programmatic focus (via `.focus()`) without inserting the element into the Tab order. Remove the attribute after focus if you prefer: `heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true })`.
 
 ---
 
