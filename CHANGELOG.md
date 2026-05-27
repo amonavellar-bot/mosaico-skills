@@ -7,6 +7,24 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0] — 2026-05-27
+
+### Fixed
+
+- `checklist-abnt.md` — added item numbers (5.X.X format) to all 146 items across 16 sections, enabling precise citations in the format required by SKILL.md; added explicit WCAG 3.3.8 cross-reference to item 5.9.16
+- `patterns-web.md` — implemented complete focus trap in HTML modal (Tab/Shift+Tab cycle, ESC key, focus return to trigger); fixed `role="alert"` + `aria-live="polite"` conflict in HTML and React live region examples (changed to `role="status"`); fixed Angular custom component to use native `button[app-opcao]` selector instead of `role="button"` on host; fixed Vue accordion to use `:hidden` attribute instead of `v-show` for semantic correctness across all AT/browser combinations
+- `patterns-mobile.md` — added missing `excludeSemantics: true` parameter to Flutter `Semantics` example; resolved React Native live region conflict (`accessibilityRole="alert"` removed from `accessibilityLiveRegion="polite"` context); corrected SwiftUI hint guidance to descriptive form per Apple HIG
+- `ciandt-context.md` — added European Accessibility Act (EAA, Directive 2019/882) with June 2025 private-sector compliance deadline; clarified disability statistics with Censo 2022 context alongside PNS 2019 dual-methodology explanation
+- `SKILL.md` — added Platform Ambiguity fallback section with instructions for detecting platform from code clues and requesting clarification when ambiguous
+
+### Added
+
+- `patterns-web.md` — complete React Modal focus trap component with `useFocusTrap` pattern; new SPA Routing Focus Management section with working examples for React Router, Vue Router, and Angular Router
+- `patterns-mobile.md` — Quick Reference: Common Mistakes table covering all four mobile platforms (React Native, Flutter, iOS, Android)
+- `wcag-quick-ref.md` — official W3C spec URL, last-reviewed date, version note for future updates
+
+---
+
 ## [1.0.0] — 2026-05-26
 
 ### Added

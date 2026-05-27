@@ -1,6 +1,11 @@
 # WCAG 2.2 Quick Reference
 
-W3C Recommendation, 5 October 2023. 4 principles, 13 guidelines, 78 success criteria.
+**Official spec:** https://www.w3.org/TR/WCAG22/
+**Published:** W3C Recommendation, 5 October 2023
+**Last reviewed:** 2026-05-27
+**Criteria:** 4 principles · 13 guidelines · 78 success criteria (4.1.1 Parsing removed as obsolete in WCAG 2.2)
+
+> **Version note:** If a new WCAG version is released, update this file, bump the header above, and add an entry to CHANGELOG.md.
 
 **Levels:** A (minimum) · AA (standard target) · AAA (enhanced)
 
